@@ -1,11 +1,10 @@
 Package: seepr
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Calculate seepage flux from temperature probes.
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Authors@R: person("Valentin","Gartiser",email = "valentin.gartiser@student.uni-tuebingen.de",role = c("aut", "cre"),comment = c(ORCID = "0000-0001-5320-374X"))
+Description: Based on the thermal dispersion of heat in the sediment, 
+calculate the flux of water into (or from) the sediment.
+License: none
 Encoding: UTF-8
 LazyData: true
