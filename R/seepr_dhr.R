@@ -20,3 +20,36 @@ new_seepr_dhr <- function(x,
   x
 }
 
+
+
+
+####### METHODS ######## -----------------
+
+#' @export
+dhr_trend <- function(x){
+  UseMethod("dhr_trend")
+}
+#' @exportS3Method
+dhr_trend.seepr_dhr <- function(x){
+  x$m[,1]
+}
+
+
+#' @export
+dhr_amp_sin <- function(x){
+  UseMethod("dhr_amp_sin")
+}
+#' @exportS3Method
+dhr_amp_sin.seepr_dhr <- function(x){
+  x$m[,2]
+}
+
+
+#' @export
+dhr_amp_cos <- function(x){
+  UseMethod("dhr_amp_cos")
+}
+#' @exportS3Method
+dhr_amp_cos.seepr_dhr <- function(x){
+  x$m[,4]
+}

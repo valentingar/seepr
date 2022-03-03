@@ -13,7 +13,8 @@ dhr <- function(x,
 
   mod <- dhr_mod(x,s)
   x <- dlm::dlmFilter(x, mod)
-
+  x <- new_seepr_dhr(x,s)
+  x
 }
 
 
