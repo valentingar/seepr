@@ -14,9 +14,13 @@ test_that("dhr works", {
   p3 <- phase(dhr(x3, s = s))[50]
   p4 <- phase(dhr(x4, s = s))[50]
 
+  t1 <- trend(dhr(x1+10, s= s))[50]
+
   expect_true(abs(p1 - 0) < 0.0001 |  abs(p1 - 2*pi) < 0.0001 )
   expect_true(abs(p2 - pi/2) < 0.0001 )
   expect_true(abs(p3 - pi) < 0.0001 )
   expect_true(abs(p4 - 1.5 * pi) < 0.0001 )
+
+  expect_equal(round(t1),10)
 
 })
