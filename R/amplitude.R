@@ -27,7 +27,7 @@ amplitude.seepr_dhr <- function(x){
 
 
 ####### HELPERS ######## -------------------------
-amplitude_from_amps <- function(a_cos,
-                                b_sin){
+amplitude_from_amp <- function(a_cos,
+                               b_sin){
   sqrt(a_cos^2 + b_sin^2)
 }
