@@ -23,11 +23,15 @@ phase.seepr_dhr <- function(x){
 
   phase_out <-phase_from_amp(a_cos,
                              b_sin)
-  phase_out
+  phase_out[-1]
 
 }
 
 
+#' @exportS3Method
+phase.seepr_fit <- function(x){
+  attr(x, "PHASE")
+}
 
 
 
@@ -38,9 +42,10 @@ phase_from_amp <- function(a_cos,
   s_b <- sign(b_sin)
   s_a <- sign(a_cos)
 
-  gamma <- rep(-pi / 2, length(a_cos))
-  gamma[s_b == -1] <- pi/2
+  #gamma <- rep(-pi / 2, length(a_cos))
+  #gamma[s_b == -1] <- pi/2
 
-  phi <- (atan(b_sin / a_cos) + gamma) %% (2*pi)
+  #phi <- (atan(b_sin / a_cos) + gamma) %% (2*pi)
+  phi <- (atan2(b_sin, a_cos) - pi/2) %% (2*pi)
   phi
 }
