@@ -13,7 +13,10 @@ trend <- function(x){
 #' @exportS3Method
 trend.seepr_dhr <- function(x){
   trend_out <- x$m[,1]
-  trend_out
+  trend_out[-1]
 }
 
-
+#' @exportS3Method
+trend.seepr_fit <- function(x){
+  attr(x, "TREND")
+}

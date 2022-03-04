@@ -20,14 +20,19 @@ amplitude.seepr_dhr <- function(x){
 
   amplitude_out <-amplitude_from_amp(a_cos,
                              b_sin)
-  amplitude_out
+  amplitude_out[-1]
 
+}
+
+#' @exportS3Method
+amplitude.seepr_fit <- function(x){
+  attr(x, "AMPLITUDE")
 }
 
 
 
 ####### HELPERS ######## -------------------------
-amplitude_from_amps <- function(a_cos,
-                                b_sin){
+amplitude_from_amp <- function(a_cos,
+                               b_sin){
   sqrt(a_cos^2 + b_sin^2)
 }
