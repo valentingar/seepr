@@ -16,7 +16,7 @@ seepr_dat(x, depths)
 }}
 
 \item{depths}{A vector with the same length as the number of temperature probes in
-x. The depths correspond to the depth of the temperature probes in x read from left
+x. Depth in m from sediement/water interface (down is positive). The depths correspond to the depth of the temperature probes in x read from left
 to right.}
 }
 \description{
