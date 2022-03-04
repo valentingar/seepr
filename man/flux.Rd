@@ -4,14 +4,10 @@
 \alias{flux}
 \title{flux}
 \usage{
-flux(t_up, t_low, z, s, n, Cscal, Cwcal, Kcal, method)
+flux(x, n, Cscal, Cwcal, Kcal, method)
 }
 \arguments{
-\item{t_up, t_low}{temperature time series of the upper and lower sensor in °C.}
-
-\item{z}{depth difference between in m}
-
-\item{s}{The period length in entries in x}
+\item{x}{A time series or vector}
 
 \item{n}{total porosity vol/vol}
 
@@ -26,6 +22,10 @@ flux(t_up, t_low, z, s, n, Cscal, Cwcal, Kcal, method)
 \item{keery_amplitude}
 \item{keery_phase}
 }}
+
+\item{t_up, t_low}{temperature time series of the upper and lower sensor in °C.}
+
+\item{z}{depth difference between in m}
 }
 \description{
 Calculates vertical seepage flux from
