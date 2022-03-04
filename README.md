@@ -8,7 +8,9 @@
 
 Calculate seepage flux from temperature probes.
 
-## Installation
+This package is still under development and not yet stable. Please
+contact valentin.gartiser <at> student.uni-tuebingen.de for any
+questions. ## Installation
 
 You can install the development version of seepr from
 [GitHub](https://github.com/) with:
