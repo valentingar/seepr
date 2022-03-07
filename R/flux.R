@@ -19,6 +19,7 @@
 #' \itemize{
 #' \item{keery_amplitude}
 #' \item{keery_phase}
+#' \item{hatch_amplitude}
 #' \item{hatch_phase}
 #'}
 #'
@@ -89,7 +90,8 @@ flux_pair  <- function(PHASE,
 
   method <- match.arg(method, c("keery_amplitude",
                                 "keery_phase",
-                                "hatch_phase"))
+                                "hatch_phase",
+                                "hatch_amplitude"))
 
   # unit conversion
   K <- Kcal * 4.184*100*60*60
@@ -136,13 +138,20 @@ flux_pair  <- function(PHASE,
                                  K,
                                  Cw,
                                  P)
-  } else if (method == "hatch_phase"){
-    flux_out <- flux_hatch_phase(Ke,
+  } else if (method == "hatch_amplitude"){
+    flux_out <- flux_hatch_amplitude(Ke,
                                  beta,
                                  z,
                                  amps_rel,
                                  he_ca_ra,
                                  P)
+  } else if (method == "hatch_phase"){
+    flux_out <- flux_hatch_phase(t_lag_hrs,
+                                 Ke,
+                                 beta,
+                                 P,
+                                 z,
+                                 he_ca_ra)
   }
   flux_out
 }
@@ -192,7 +201,7 @@ flux_keery_phase <- function(C,
   flux_out <-(sqrt((C*z/Cw/t_lag_hrs)^2-(K*4*pi*t_lag_hrs/Cw/P/z)^2)) / 3600
 }
 
-flux_hatch_phase <- function(Ke,
+flux_hatch_amplitude <- function(Ke,
                              beta,
                              z,
                              amps_rel,
@@ -203,7 +212,7 @@ flux_hatch_phase <- function(Ke,
   thermal_front_v <-
     sapply(amps_rel, function(Ar){
       tryCatch(
-        pracma::fzero(hp_fun,
+        pracma::fzero(ha_fun,
                       x = 1e-10,
                       Ke = Ke,
                       beta = beta,
@@ -220,8 +229,47 @@ flux_hatch_phase <- function(Ke,
 
 }
 
+flux_hatch_phase <- function(t_lag_hrs,
+                             Ke,
+                             beta,
+                             P,
+                             z,
+                             he_ca_ra){
+
+
+  thermal_front_v <-
+    sapply(t_lag_hrs, function(timelag){
+      tryCatch(
+        pracma::fzero(hp_fun,
+                      x = 1e-10,
+                      Ke = Ke,
+                      beta = beta,
+                      timelag = timelag,
+                      P = P,
+                      z = z)$x,
+        error = function(i) NA)
+    })
+
+
+
+  flux_out <- thermal_front_v / he_ca_ra / 3600
+  flux_out
+
+
+}
+
 
 hp_fun <- function(v,
+                   Ke,
+                   beta,
+                   timelag,
+                   P,
+                   z){
+  out <- sqrt(sqrt(v^4+(8*pi*(Ke+abs(beta*v))/P)^2)-2*(timelag*4*pi*(Ke+abs(beta*v))/P/z)^2)-v
+  out
+}
+
+ha_fun <- function(v,
                    Ke,
                    beta,
                    z,

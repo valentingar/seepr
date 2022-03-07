@@ -21,6 +21,7 @@ flux(x, n, Cscal, Cwcal, Kcal, beta, method)
 \itemize{
 \item{keery_amplitude}
 \item{keery_phase}
+\item{hatch_amplitude}
 \item{hatch_phase}
 }}
 
