@@ -19,6 +19,7 @@
 #' \itemize{
 #' \item{keery_amplitude}
 #' \item{keery_phase}
+#' \item{hatch_phase}
 #'}
 #'
 #' @inheritParams dhr
@@ -31,6 +32,7 @@ flux <- function(x,
                  Cscal,
                  Cwcal,
                  Kcal,
+                 beta,
                  method){
   UseMethod("flux")
 }
@@ -41,6 +43,7 @@ flux.seepr_fit <- function(x,
                            Cscal,
                            Cwcal,
                            Kcal,
+                           beta,
                            method){
 
 PHASE <- phase(x)
@@ -58,6 +61,7 @@ FLUX <-lapply(1:(length(depths)-1),
                           Cscal,
                           Cwcal,
                           Kcal,
+                          beta,
                           method)
 
               }) %>%
@@ -80,9 +84,12 @@ flux_pair  <- function(PHASE,
                  Cscal,
                  Cwcal,
                  Kcal,
+                 beta,
                  method){
 
-  method <- match.arg(method, c("keery_amplitude", "keery_phase"))
+  method <- match.arg(method, c("keery_amplitude",
+                                "keery_phase",
+                                "hatch_phase"))
 
   # unit conversion
   K <- Kcal * 4.184*100*60*60
@@ -128,6 +135,13 @@ flux_pair  <- function(PHASE,
                                  t_lag_hrs,
                                  K,
                                  Cw,
+                                 P)
+  } else if (method == "hatch_phase"){
+    flux_out <- flux_hatch_phase(Ke,
+                                 beta,
+                                 z,
+                                 amps_rel,
+                                 he_ca_ra,
                                  P)
   }
   flux_out
@@ -176,4 +190,43 @@ flux_keery_phase <- function(C,
 
 
   flux_out <-(sqrt((C*z/Cw/t_lag_hrs)^2-(K*4*pi*t_lag_hrs/Cw/P/z)^2)) / 3600
+}
+
+flux_hatch_phase <- function(Ke,
+                             beta,
+                             z,
+                             amps_rel,
+                             he_ca_ra,
+                             P){
+
+
+  thermal_front_v <-
+    sapply(amps_rel, function(Ar){
+      tryCatch(
+        pracma::fzero(hp_fun,
+                      x = 1e-10,
+                      Ke = Ke,
+                      beta = beta,
+                      z = z,
+                      Ar = Ar,
+                      P = P)$x,
+        error = function(i) NA)
+    })
+
+
+
+  flux_out <- thermal_front_v / he_ca_ra / 3600
+  flux_out
+
+}
+
+
+hp_fun <- function(v,
+                   Ke,
+                   beta,
+                   z,
+                   Ar,
+                   P){
+  out <-(2*(Ke+abs(beta*v))/z)*log(Ar)+sqrt(((sqrt(v^4+(8*pi*(Ke+abs(beta*v))/P)^2))+v^2)/2)-v
+  out
 }
