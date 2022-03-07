@@ -4,7 +4,7 @@
 \alias{flux}
 \title{flux}
 \usage{
-flux(x, n, Cscal, Cwcal, Kcal, method)
+flux(x, n, Cscal, Cwcal, Kcal, beta, method)
 }
 \arguments{
 \item{x}{A time series or vector}
@@ -21,6 +21,8 @@ flux(x, n, Cscal, Cwcal, Kcal, method)
 \itemize{
 \item{keery_amplitude}
 \item{keery_phase}
+\item{hatch_amplitude}
+\item{hatch_phase}
 }}
 
 \item{t_up, t_low}{temperature time series of the upper and lower sensor in °C.}

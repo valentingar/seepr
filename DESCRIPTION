@@ -8,7 +8,8 @@ License: none
 Encoding: UTF-8
 LazyData: true
 Imports: 
-    dlm
+    dlm,
+    pracma
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
