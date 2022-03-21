@@ -12,7 +12,9 @@ dhr <- function(x,
                 s){
 
   mod <- dhr_mod(x,s)
-  x <- dlm::dlmFilter(x, mod)
+  #x <- dlm::dlmFilter(x, mod)
+  x <- dlm::dlmSmooth(x, mod)
+  x$m <- x$s
   x <- new_seepr_dhr(x,s)
   x
 }

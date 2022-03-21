@@ -11,7 +11,7 @@
 new_seepr_dhr <- function(x,
                           s){
 
-  stopifnot(inherits(x,"dlmFiltered"))
+  #stopifnot(inherits(x,"dlmFiltered"))
 
   x <-
   structure(x,
