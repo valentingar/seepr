@@ -25,18 +25,24 @@ dhr <- function(x,
 dhr_mod<- function(x,
                    s){
   phi <- 2 * pi / s * (0:(length(x)-1))
+
+  V <- 0.2
+  W_1 <- sd(diff(zoo::rollmean(x,s))) / 4
+  m0_1 <- mean(x[1:s], na.rm = TRUE)
+
+  # trend / sin / d(sin) / cos / d(cos)
   mod <- dlm::dlm(FF = matrix(c(1,1,0,1,0),1,5),
                   GG = matrix(c(1,0,0,0,0,
                                 0,1,0,0,0,
                                 0,1,1,0,0,
                                 0,0,0,1,0,
                                 0,0,0,1,1),5,5),
-                  V = matrix(1),
-                  W = matrix(c(1000, rep(0,24)),5,5),
+                  V = matrix(V),
+                  W = diag(c(W_1,0,1e-8,0,1e-8),5),
                   JFF = matrix(c(0,1,0,2,0),1,5),
                   X = matrix(c(sin(phi), cos(phi)), nrow = length(x), ncol = 2),
-                  m0 = c(0,0,0,0,0),
-                  C0 = diag(1e7,nrow = 5)
+                  m0 = c(m0_1,1,0,1,0),
+                  C0 = diag(1e3,nrow = 5)
   )
 
 
