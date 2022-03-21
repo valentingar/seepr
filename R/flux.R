@@ -114,7 +114,7 @@ flux_pair  <- function(PHASE,
 
   # time lag in samples
   t_lag <-((phases_2 - phases_1 ) %% (2*pi)  / 2 / pi * s ) %% s
-  t_lag_hrs <- ((phases_2 - phases_1) / 2 / pi * 24)
+  t_lag_hrs <- t_lag * 24 /s
 
   # time lag as indices
   t_up_lagged <-round(1:length(phases_1) - t_lag)
